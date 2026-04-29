@@ -9,11 +9,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-<<<<<<< HEAD
   title: "MESH",
-=======
-  title: "ObscuraNet",
->>>>>>> a07ce9936b1b5bbca92c207f0759e37c9840d39a
   description: "Hardware accelerated scrollytelling experience",
 };
 

@@ -72,7 +72,7 @@ export default function TechnicalCore() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-3xl md:text-5xl font-bold tracking-tight text-white font-sans uppercase"
           >
-            The "How" of multi-layer anonymity
+            The &quot;How&quot; of multi-layer anonymity
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}

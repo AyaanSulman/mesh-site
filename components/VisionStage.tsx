@@ -57,26 +57,16 @@ export default function VisionStage() {
         {/* --- SCENE 1: TRANSITION --- */}
         <motion.div 
           className="absolute flex items-center gap-8"
-<<<<<<< HEAD
           style={{ opacity: transOpacity, scale: transScale, x: transX, willChange: "transform, opacity" }}
         >
           <span className="text-[12rem] md:text-[18rem] font-bold text-cyan-400/20 leading-none select-none border-r-4 border-cyan-400/40 pr-8">3</span>
-=======
-          style={{ opacity: transOpacity, scale: transScale, x: transX }}
-        >
-          <span className="text-[12rem] md:text-[18rem] font-bold text-cyan-400/20 leading-none select-none border-r-4 border-cyan-400/40 pr-8">2</span>
->>>>>>> a07ce9936b1b5bbca92c207f0759e37c9840d39a
           <h2 className="text-6xl md:text-8xl font-bold text-white tracking-[0.2em] font-mono leading-tight">THE<br/>VISION</h2>
         </motion.div>
 
         {/* --- SCENE 2: INTRODUCING --- */}
         <motion.div 
           className="absolute flex flex-col items-center text-center max-w-4xl px-6"
-<<<<<<< HEAD
           style={{ opacity: introOpacity, y: introY, willChange: "transform, opacity" }}
-=======
-          style={{ opacity: introOpacity, y: introY }}
->>>>>>> a07ce9936b1b5bbca92c207f0759e37c9840d39a
         >
           <p className="text-3xl md:text-4xl font-mono text-white mb-4 tracking-widest lowercase opacity-60 italic">introducing</p>
           <h2 className="text-6xl md:text-8xl font-bold text-white font-mono tracking-widest mb-12 shadow-[0_0_20px_rgba(6,182,212,0.5)]">OBSCURANET</h2>
@@ -100,11 +90,7 @@ export default function VisionStage() {
         {/* --- SCENE 3: FEATURE ICONS --- */}
         <motion.div 
           className="absolute w-full max-w-6xl px-6 flex flex-col items-center"
-<<<<<<< HEAD
           style={{ opacity: featuresOpacity, y: featuresY, willChange: "transform, opacity" }}
-=======
-          style={{ opacity: featuresOpacity, y: featuresY }}
->>>>>>> a07ce9936b1b5bbca92c207f0759e37c9840d39a
         >
           <div className="text-center mb-16">
             <h2 className="text-6xl font-bold text-white font-mono tracking-widest mb-2">OBSCURANET</h2>
@@ -126,11 +112,7 @@ export default function VisionStage() {
         {/* --- SCENE 4: TECHNICAL MATRIX --- */}
         <motion.div 
           className="absolute w-full max-w-6xl px-6 flex flex-col items-center"
-<<<<<<< HEAD
           style={{ opacity: tableOpacity, y: tableY, willChange: "transform, opacity" }}
-=======
-          style={{ opacity: tableOpacity, y: tableY }}
->>>>>>> a07ce9936b1b5bbca92c207f0759e37c9840d39a
         >
           <div className="mb-8 w-full flex justify-center">
             <h2 className="text-4xl font-bold text-white font-mono tracking-widest shadow-[0_0_15px_rgba(6,182,212,0.3)] px-8 py-2 border-x-2 border-cyan-500">OBSCURANET</h2>
