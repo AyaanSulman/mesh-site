@@ -61,7 +61,7 @@ export default function DeepDiveStage() {
         {/* --- SCENE 1: INNOVATION --- */}
         <motion.div 
           className="absolute flex flex-col items-center text-center max-w-5xl px-6"
-          style={{ opacity: innovationOpacity, y: innovationY, willChange: "transform, opacity" }}
+          style={{ opacity: innovationOpacity, y: innovationY }}
         >
           <h2 className="text-5xl md:text-7xl font-bold text-white font-mono tracking-[0.2em] mb-12">OUR <span className="text-cyan-400">INNOVATION</span></h2>
           <div className="grid md:grid-cols-2 gap-8 w-full">
@@ -79,7 +79,7 @@ export default function DeepDiveStage() {
         {/* --- SCENE 2: ROUTING EVOLUTION --- */}
         <motion.div 
           className="absolute w-full max-w-6xl px-6 flex flex-col items-center"
-          style={{ opacity: evolutionOpacity, y: evolutionY, willChange: "transform, opacity" }}
+          style={{ opacity: evolutionOpacity, y: evolutionY }}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-white font-mono mb-12 tracking-widest uppercase">How did we get <span className="text-cyan-400">here?</span></h2>
           <div className="w-full space-y-4">
@@ -111,7 +111,7 @@ export default function DeepDiveStage() {
         {/* --- SCENE 3: ATTACK MATRIX --- */}
         <motion.div 
           className="absolute w-full max-w-6xl px-6 flex flex-col items-center"
-          style={{ opacity: matrixOpacity, y: matrixY, willChange: "transform, opacity" }}
+          style={{ opacity: matrixOpacity, y: matrixY }}
         >
           <h2 className="text-3xl md:text-5xl font-bold text-white font-mono mb-8 tracking-widest uppercase">Defensive <span className="text-red-500">Architecture</span></h2>
           <div className="w-full grid gap-4 overflow-y-auto max-h-[60vh] pr-4 custom-scrollbar">
@@ -128,7 +128,7 @@ export default function DeepDiveStage() {
         {/* --- SCENE 4: ADAPTIVE STANDOUT --- */}
         <motion.div 
           className="absolute w-full max-w-6xl px-6 flex flex-col items-center"
-          style={{ opacity: standOpacity, y: standY, willChange: "transform, opacity" }}
+          style={{ opacity: standOpacity, y: standY }}
         >
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-6xl font-bold text-white font-mono mb-4 tracking-[0.3em]">OBSCURANET</h2>

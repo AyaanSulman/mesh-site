@@ -227,7 +227,6 @@ export default function ProtocolLifecycle() {
             filter: useTransform(relayBlur, (b) => `blur(${b}px)`),
             x: useTransform(smoothProgress, [0.65, 0.68, 0.7, 0.75, 0.78, 0.8], [0, 5, -5, 0, 5, 0]), // Subtle vibration during jump
             perspective: 1000,
-            willChange: "transform, filter"
           }}
           className="relative w-full max-w-4xl aspect-[16/10] z-20"
         >
@@ -624,7 +623,6 @@ export default function ProtocolLifecycle() {
                     scale: useTransform(smoothProgress, [0.1, 0.2], [0.5, 1]),
                     x: useTransform(smoothProgress, [0.6, 0.7, 0.75, 0.85], [0, (i % 2 === 0 ? -800 : 800), (i % 2 === 0 ? -1200 : 1200), (i % 2 === 0 ? -2000 : 2000)]),
                     y: useTransform(smoothProgress, [0.6, 0.85], [0, (i < 4 ? -500 : 500)]),
-                    willChange: "transform, opacity"
                   }}
                 >
                    <div className="w-8 h-8 mb-2 border border-cyan-500/30 rounded flex items-center justify-center">

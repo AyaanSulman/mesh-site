@@ -23,27 +23,22 @@ export default function ProblemSpace() {
   const introScale = useTransform(scrollYProgress, [0, 0.1], [1, 1]);
   const introX = useTransform(scrollYProgress, [0, 0.1, 0.2], [0, 0, -50]);
 
-  // Scene 2: Global Data Breaches (0.2 - 0.45)
-  const breachesOpacity = useTransform(scrollYProgress, [0.2, 0.25, 0.4, 0.45], [0, 1, 1, 0]);
-  const breachesY = useTransform(scrollYProgress, [0.2, 0.25, 0.45], [50, 0, -50]);
+  // Scene 2: Global Data Breaches (0.2 - 0.5)
+  const breachesOpacity = useTransform(scrollYProgress, [0.2, 0.25, 0.45, 0.5], [0, 1, 1, 0]);
+  const breachesY = useTransform(scrollYProgress, [0.2, 0.25, 0.5], [50, 0, -50]);
   
   // Bar Chart growth
-  const bar2017 = useTransform(scrollYProgress, [0.25, 0.35], [0, 2.5]);
-  const bar2018 = useTransform(scrollYProgress, [0.25, 0.35], [0, 2.8]);
-  const bar2019 = useTransform(scrollYProgress, [0.25, 0.35], [0, 4.0]);
-  const bar2020 = useTransform(scrollYProgress, [0.25, 0.35], [0, 5.2]);
-  const bar2021 = useTransform(scrollYProgress, [0.25, 0.35], [0, 6.5]);
-  const bar2022 = useTransform(scrollYProgress, [0.25, 0.35], [0, 7.2]);
-  const bar2023 = useTransform(scrollYProgress, [0.25, 0.35], [0, 8.0]);
+  const bar2017 = useTransform(scrollYProgress, [0.25, 0.4], [0, 2.5]);
+  const bar2018 = useTransform(scrollYProgress, [0.25, 0.4], [0, 2.8]);
+  const bar2019 = useTransform(scrollYProgress, [0.25, 0.4], [0, 4.0]);
+  const bar2020 = useTransform(scrollYProgress, [0.25, 0.4], [0, 5.2]);
+  const bar2021 = useTransform(scrollYProgress, [0.25, 0.4], [0, 6.5]);
+  const bar2022 = useTransform(scrollYProgress, [0.25, 0.4], [0, 7.2]);
+  const bar2023 = useTransform(scrollYProgress, [0.25, 0.4], [0, 8.0]);
 
-  // Scene 3: Metadata Risk (0.45 - 0.65)
-  const metadataOpacity = useTransform(scrollYProgress, [0.45, 0.5, 0.6, 0.65], [0, 1, 1, 0]);
-  const metadataY = useTransform(scrollYProgress, [0.45, 0.5, 0.65], [50, 0, -50]);
-
-  // Scene 4: PROBLEM SPACE Transition (0.65 - 0.8)
-  const problemOpacity = useTransform(scrollYProgress, [0.65, 0.7, 0.75, 0.8], [0, 1, 1, 0]);
-  const problemScale = useTransform(scrollYProgress, [0.65, 0.7], [0.8, 1]);
-  const problemX = useTransform(scrollYProgress, [0.65, 0.7, 0.8], [50, 0, -50]);
+  // Scene 3: Metadata Risk (0.5 - 0.8)
+  const metadataOpacity = useTransform(scrollYProgress, [0.5, 0.55, 0.75, 0.8], [0, 1, 1, 0]);
+  const metadataY = useTransform(scrollYProgress, [0.5, 0.55, 0.8], [50, 0, -50]);
 
   // Scene 5: Censorship Chart (0.8 - 1.0)
   const censorshipOpacity = useTransform(scrollYProgress, [0.8, 0.85, 0.95, 1.0], [0, 1, 1, 1]);
@@ -74,16 +69,16 @@ export default function ProblemSpace() {
         {/* --- SCENE 1: INTRODUCTION --- */}
         <motion.div 
           className="absolute flex items-center gap-8"
-          style={{ opacity: introOpacity, scale: introScale, x: introX, willChange: "transform, opacity" }}
+          style={{ opacity: introOpacity, scale: introScale, x: introX }}
         >
           <span className="text-[12rem] md:text-[18rem] font-bold text-cyan-400/20 leading-none select-none border-r-4 border-cyan-400/40 pr-8">1</span>
-          <h2 className="text-6xl md:text-8xl font-bold text-white tracking-[0.2em] font-mono">INTRODUCTION</h2>
+          <h2 className="text-6xl md:text-8xl font-bold text-white tracking-[0.2em] font-mono leading-tight">PROBLEM<br/>SPACE</h2>
         </motion.div>
 
         {/* --- SCENE 2: DATA BREACHES --- */}
         <motion.div 
           className="absolute w-full max-w-5xl px-6 flex flex-col md:flex-row items-center gap-12"
-          style={{ opacity: breachesOpacity, y: breachesY, willChange: "transform, opacity" }}
+          style={{ opacity: breachesOpacity, y: breachesY }}
         >
           <div className="flex-1 w-full space-y-4 font-mono">
              {[
@@ -116,7 +111,7 @@ export default function ProblemSpace() {
         {/* --- SCENE 3: METADATA RISK --- */}
         <motion.div 
           className="absolute w-full max-w-5xl px-6 flex flex-col md:flex-row items-center gap-16"
-          style={{ opacity: metadataOpacity, y: metadataY, willChange: "transform, opacity" }}
+          style={{ opacity: metadataOpacity, y: metadataY }}
         >
           <div className="relative w-64 h-64 md:w-80 md:h-80 shrink-0">
              <svg viewBox="0 0 100 100" className="transform -rotate-90">
@@ -150,19 +145,12 @@ export default function ProblemSpace() {
           </div>
         </motion.div>
 
-        {/* --- SCENE 4: PROBLEM SPACE Transition --- */}
-        <motion.div 
-          className="absolute flex items-center gap-8"
-          style={{ opacity: problemOpacity, scale: problemScale, x: problemX, willChange: "transform, opacity" }}
-        >
-          <span className="text-[12rem] md:text-[18rem] font-bold text-cyan-400/20 leading-none select-none border-r-4 border-cyan-400/40 pr-8">2</span>
-          <h2 className="text-6xl md:text-8xl font-bold text-white tracking-[0.2em] font-mono leading-tight">PROBLEM<br/>SPACE</h2>
-        </motion.div>
+
 
         {/* --- SCENE 5: CENSORSHIP CHART --- */}
         <motion.div 
           className="absolute w-full max-w-5xl px-6 flex flex-col items-center"
-          style={{ opacity: censorshipOpacity, y: censorshipY, willChange: "transform, opacity" }}
+          style={{ opacity: censorshipOpacity, y: censorshipY }}
         >
           <div className="text-center mb-12">
             <h2 className="text-5xl md:text-6xl font-bold text-white font-mono mb-2">The Current <span className="text-cyan-400">State</span> of Privacy</h2>

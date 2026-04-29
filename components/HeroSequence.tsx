@@ -20,7 +20,13 @@ export default function HeroSequence() {
   const imageScale = useTransform(
     scrollYProgress,
     [0.6, 0.8],
-    [1, 150]
+    [1, 30]
+  );
+
+  const imageOpacity = useTransform(
+    scrollYProgress,
+    [0.7, 0.8],
+    [1, 0]
   );
 
   const textOpacity = useTransform(
@@ -83,7 +89,7 @@ export default function HeroSequence() {
           style={{
             x: imageX,
             scale: imageScale,
-            willChange: "transform",
+            opacity: imageOpacity,
           }}
         >
           <span className="font-mono text-cyan-400 text-xl tracking-widest animate-pulse">

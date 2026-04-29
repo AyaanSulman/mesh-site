@@ -67,7 +67,7 @@ export default function WorkflowStage() {
         {/* --- SCENE 1: ARCHITECTURE OVERVIEW --- */}
         <motion.div 
           className="absolute w-full max-w-6xl px-6 flex flex-col items-center"
-          style={{ opacity: archOpacity, y: archY, willChange: "transform, opacity" }}
+          style={{ opacity: archOpacity, y: archY }}
         >
           <h2 className="text-4xl md:text-6xl font-bold text-white font-mono mb-16 tracking-widest text-center uppercase">Modular <span className="text-cyan-400">Architecture</span> Overview</h2>
           <div className="grid md:grid-cols-3 gap-8 w-full">
@@ -87,7 +87,7 @@ export default function WorkflowStage() {
         {/* --- SCENE 2: COMPONENT DESIGN JOURNEY --- */}
         <motion.div 
           className="absolute w-full h-full flex flex-col items-center justify-center"
-          style={{ opacity: journeyOpacity, y: journeyY, willChange: "transform, opacity" }}
+          style={{ opacity: journeyOpacity, y: journeyY }}
         >
           <div className="absolute top-20 text-center">
             <h2 className="text-5xl font-bold text-white font-mono tracking-widest uppercase">Component <span className="text-cyan-400">Design</span></h2>

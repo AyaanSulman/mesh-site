@@ -37,16 +37,16 @@ export default function MotivationStage() {
         {/* --- SCENE 1: TRANSITION --- */}
         <motion.div 
           className="absolute flex items-center gap-8"
-          style={{ opacity: transOpacity, scale: transScale, x: transX, willChange: "transform, opacity" }}
+          style={{ opacity: transOpacity, scale: transScale, x: transX }}
         >
-          <span className="text-[12rem] md:text-[18rem] font-bold text-cyan-400/20 leading-none select-none border-r-4 border-cyan-400/40 pr-8">4</span>
+          <span className="text-[12rem] md:text-[18rem] font-bold text-cyan-400/20 leading-none select-none border-r-4 border-cyan-400/40 pr-8">3</span>
           <h2 className="text-6xl md:text-8xl font-bold text-white tracking-[0.2em] font-mono">MOTIVATION</h2>
         </motion.div>
 
         {/* --- SCENE 2: CURRENT STATE --- */}
         <motion.div 
           className="absolute w-full max-w-6xl px-6 flex flex-col items-center"
-          style={{ opacity: currentOpacity, y: currentY, willChange: "transform, opacity" }}
+          style={{ opacity: currentOpacity, y: currentY }}
         >
           <div className="text-right w-full mb-16">
             <h2 className="text-5xl md:text-6xl font-bold text-white font-mono leading-tight">Current State of<br/><span className="text-cyan-400 uppercase tracking-widest">Privacy & Anonymity Tools</span></h2>
@@ -77,7 +77,7 @@ export default function MotivationStage() {
         {/* --- SCENE 3: WHAT WE OFFER --- */}
         <motion.div 
           className="absolute w-full max-w-6xl px-6 flex flex-col items-center"
-          style={{ opacity: offerOpacity, y: offerY, willChange: "transform, opacity" }}
+          style={{ opacity: offerOpacity, y: offerY }}
         >
           <div className="text-right w-full mb-16">
             <h2 className="text-6xl md:text-8xl font-bold text-white font-mono tracking-widest">What We Offer</h2>
