@@ -11,6 +11,33 @@ function AnimatedNumber({ value }: { value: MotionValue<number> }) {
   return <>{display}</>;
 }
 
+function Scene2Bar({ value }: { value: MotionValue<number> }) {
+  const width = useTransform(value, (v) => `${v * 10}%`);
+  return <motion.div className="h-6 bg-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.4)] rounded-r" style={{ width }} />;
+}
+
+function Scene5Bar({ value, icon }: { value: MotionValue<number>, icon: string }) {
+  const width = useTransform(value, (v) => `${v}%`);
+  const xOffset = useTransform(value, (v) => `calc(-100% + ${v}%)`);
+  
+  return (
+    <div className="flex-1 h-8 bg-cyan-900/30 rounded-r relative overflow-hidden">
+      <motion.div 
+        className="h-full bg-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.5)] rounded-r flex items-center justify-end pr-2" 
+        style={{ width }}
+      >
+        <div className="text-xl mr-[-12px] z-10 drop-shadow-md">{icon}</div>
+      </motion.div>
+      <motion.span 
+        className="absolute left-full ml-4 text-white font-bold" 
+        style={{ x: xOffset }}
+      >
+        <AnimatedNumber value={value} />
+      </motion.span>
+    </div>
+  );
+}
+
 export default function ProblemSpace() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -94,7 +121,7 @@ export default function ProblemSpace() {
              ].map((b) => (
                <div key={b.year} className="flex items-center gap-4">
                  <span className="w-12 text-white/60 text-right">{b.year}</span>
-                 <motion.div className="h-6 bg-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.4)] rounded-r" style={{ width: useTransform(b.val, (v) => `${v * 10}%`) }} />
+                 <Scene2Bar value={b.val} />
                </div>
              ))}
              <div className="flex justify-between text-white/40 text-[10px] pt-2">
@@ -178,14 +205,7 @@ export default function ProblemSpace() {
              ].map((c) => (
                <div key={c.name} className="flex items-center gap-4">
                  <span className="w-24 text-white text-right text-sm">{c.name}</span>
-                 <div className="flex-1 h-8 bg-cyan-900/30 rounded-r relative overflow-hidden">
-                    <motion.div className="h-full bg-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.5)] rounded-r flex items-center justify-end pr-2" style={{ width: useTransform(c.val, (v) => `${v}%`) }}>
-                        <div className="text-xl mr-[-12px] z-10 drop-shadow-md">{c.icon}</div>
-                    </motion.div>
-                    <motion.span className="absolute left-full ml-4 text-white font-bold" style={{ x: useTransform(c.val, (v) => `calc(-100% + ${v}%)`) }}>
-                        <AnimatedNumber value={c.val} />
-                    </motion.span>
-                 </div>
+                 <Scene5Bar value={c.val} icon={c.icon} />
                </div>
              ))}
              <div className="flex justify-between text-white/40 text-xs pt-4 border-t border-white/10">

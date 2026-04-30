@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useSpring, useMotionValueEvent } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, useMotionValueEvent, MotionValue } from "framer-motion";
 
 const steps = [
   // Phase 1: Peer Discovery
@@ -30,13 +30,10 @@ const steps = [
   { id: 17, phase: "Phase 4: Final Node", label: "Display Message: 'FREE PALESTINE'", progress: [0.95, 1.0] },
 ];
 
-function RubiksCube({ progress }: { progress: any }) {
+function RubiksCube({ progress }: { progress: MotionValue<number> }) {
   // Rotate the whole cube
   const rotateX = useTransform(progress, [0.25, 0.35], [45, 405]);
   const rotateY = useTransform(progress, [0.25, 0.35], [45, 765]);
-  
-  // Solve individual tiles (from random colors to cyan)
-  const colors = ["#06b6d4", "#0891b2", "#155e75", "#22d3ee", "#67e8f9"];
   
   return (
     <motion.div 
@@ -59,7 +56,7 @@ function RubiksCube({ progress }: { progress: any }) {
   );
 }
 
-function CubeFace({ transform, progress, solvedColor }: { transform: string, progress: any, solvedColor: string }) {
+function CubeFace({ transform, progress, solvedColor }: { transform: string, progress: MotionValue<number>, solvedColor: string }) {
   const isSolved = useTransform(progress, [0.25, 0.32, 0.35], [0, 0, 1]);
   
   return (
@@ -74,7 +71,7 @@ function CubeFace({ transform, progress, solvedColor }: { transform: string, pro
   );
 }
 
-function CubeTile({ index, isSolved, solvedColor }: { index: number, isSolved: any, solvedColor: string }) {
+function CubeTile({ index, isSolved, solvedColor }: { index: number, isSolved: MotionValue<number>, solvedColor: string }) {
   const initialColor = ["#ef4444", "#eab308", "#22c55e", "#3b82f6", "#a855f7"][index % 5];
   const backgroundColor = useTransform(isSolved, [0, 1], [initialColor, solvedColor]);
   const opacity = useTransform(isSolved, [0, 0.5, 1], [0.4, 0.8, 1]);
@@ -87,7 +84,7 @@ function CubeTile({ index, isSolved, solvedColor }: { index: number, isSolved: a
   );
 }
 
-function StepLabel({ step, progress }: { step: any, progress: any }) {
+function StepLabel({ step, progress }: { step: any, progress: MotionValue<number> }) {
   const opacity = useTransform(progress, [step.progress[0], step.progress[0] + 0.01, step.progress[1] - 0.01, step.progress[1]], [0, 1, 1, 0]);
   const y = useTransform(progress, [step.progress[0], step.progress[1]], [20, -20]);
   
@@ -98,6 +95,85 @@ function StepLabel({ step, progress }: { step: any, progress: any }) {
     >
       <p className="text-xs uppercase tracking-[0.3em] opacity-40 mb-1">{step.phase}</p>
       <h3 className="text-2xl font-bold tracking-tighter">{step.label}</h3>
+    </motion.div>
+  );
+}
+
+function OnionLayer({ index, progress }: { index: number, progress: MotionValue<number> }) {
+  const scale = useTransform(progress, [0.55 + index * 0.02, 0.65 + index * 0.02, 0.7 + index * 0.05, 0.8 + index * 0.05], [0, 1, 1, 3]);
+  const opacity = useTransform(progress, [0.55 + index * 0.02, 0.6 + index * 0.02, 0.7 + index * 0.05, 0.8 + index * 0.05], [0, 1, 1, 0]);
+  const rotate = useTransform(progress, [0.5, 1], [0, (index % 2 === 0 ? 360 : -360)]);
+  
+  return (
+    <motion.div 
+      style={{ 
+        scale,
+        opacity,
+        rotate,
+        width: 140 + index * 80, 
+        height: 140 + index * 80,
+        borderStyle: index === 1 ? 'dashed' : 'solid'
+      }} 
+      className="absolute rounded-full border-2 border-cyan-500/30 shadow-[0_0_30px_rgba(6,182,212,0.2)]"
+    />
+  );
+}
+
+function OrbitingPeer({ index, progress }: { index: number, progress: MotionValue<number> }) {
+  const startX = (index % 2 === 0 ? -1 : 1) * 45;
+  const startY = (index < 4 ? -1 : 1) * 35;
+  
+  const opacity = useTransform(progress, [0.1, 0.2, 0.85, 0.9], [0, 1, 1, 0]);
+  const scale = useTransform(progress, [0.1, 0.2], [0.5, 1]);
+  const x = useTransform(progress, [0.6, 0.7, 0.75, 0.85], [0, (index % 2 === 0 ? -800 : 800), (index % 2 === 0 ? -1200 : 1200), (index % 2 === 0 ? -2000 : 2000)]);
+  const y = useTransform(progress, [0.6, 0.85], [0, (index < 4 ? -500 : 500)]);
+
+  return (
+    <motion.div
+      className="absolute w-28 h-28 border border-cyan-500/20 rounded-lg flex flex-col items-center justify-center bg-black/60 backdrop-blur-md shadow-[0_0_20px_rgba(6,182,212,0.1)]"
+      style={{
+        left: `${50 + startX}%`,
+        top: `${50 + startY}%`,
+        opacity,
+        scale,
+        x,
+        y,
+        willChange: "transform, opacity"
+      }}
+    >
+       <div className="w-8 h-8 mb-2 border border-cyan-500/30 rounded flex items-center justify-center">
+          <div className="w-4 h-4 bg-cyan-500/20 rounded-sm animate-pulse" />
+       </div>
+       <div className="text-[7px] font-mono text-cyan-400/60 leading-tight text-center">
+          PEER_{1024 + index}<br/>
+          <span className="opacity-40">192.168.1.{10 + index}</span><br/>
+          <span className="text-green-500/60">ACTIVE</span>
+       </div>
+    </motion.div>
+  );
+}
+
+function NodeBlip({ index, progress }: { index: number, progress: MotionValue<number> }) {
+  const opacity = useTransform(progress, [0.1 + (index * 0.01), 0.12 + (index * 0.01)], [0, 1]);
+  
+  return (
+    <motion.div
+      className="absolute w-2 h-2 bg-cyan-400 rounded-full shadow-[0_0_10px_#22d3ee]"
+      initial={{ opacity: 0 }}
+      style={{ 
+        left: `${40 + (index * 10)}%`, 
+        top: `${30 + (index * 15)}%`,
+        opacity
+      }}
+    >
+      <motion.div 
+        className="absolute inset-0 bg-cyan-400 rounded-full"
+        animate={{ scale: [1, 3], opacity: [1, 0] }}
+        transition={{ duration: 1.5, repeat: Infinity }}
+      />
+      <p className="absolute left-4 top-0 text-[8px] whitespace-nowrap text-cyan-400 font-mono">
+        NODE_{100 + index}: DETECTED
+      </p>
     </motion.div>
   );
 }
@@ -117,6 +193,7 @@ export default function ProtocolLifecycle() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsClient(true);
   }, []);
   
@@ -125,15 +202,15 @@ export default function ProtocolLifecycle() {
   const onionVisibilityTransform = useTransform(smoothProgress, (p) => p >= 0.5 && p <= 0.9);
 
   useMotionValueEvent(messageTransform, "change", (latest) => {
-    setTypedMessage(latest);
+    setTypedMessage(latest as string);
   });
 
   useMotionValueEvent(statusTransform, "change", (latest) => {
-    setStatusMessage(latest);
+    setStatusMessage(latest as string);
   });
 
   useMotionValueEvent(onionVisibilityTransform, "change", (latest) => {
-    setIsOnionVisible(latest);
+    setIsOnionVisible(latest as boolean);
   });
 
   // Laptop/Terminal Frame Animations
@@ -162,9 +239,7 @@ export default function ProtocolLifecycle() {
   const lockColor = useTransform(smoothProgress, [0.4, 0.45], ["#22d3ee", "#ef4444"]); // Cyan to Red
 
   // Phase 3: Onion Layers
-  const layer1Scale = useTransform(smoothProgress, [0.55, 0.6], [0, 1.2]);
-  const layer2Scale = useTransform(smoothProgress, [0.57, 0.62], [0, 1.4]);
-  const layer3Scale = useTransform(smoothProgress, [0.59, 0.64], [0, 1.6]);
+  // (Handled by OnionLayer component)
   
   // Relay Jump Effect (Zoom terminal)
   const relayZoom = useTransform(smoothProgress, [0.65, 0.7, 0.75, 0.8, 0.85], [1, 1.5, 1, 1.5, 1]);
@@ -334,25 +409,7 @@ export default function ProtocolLifecycle() {
 
                   {/* Detected Node Blips */}
                   {[...Array(5)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      className="absolute w-2 h-2 bg-cyan-400 rounded-full shadow-[0_0_10px_#22d3ee]"
-                      initial={{ opacity: 0 }}
-                      style={{ 
-                        left: `${40 + (i * 10)}%`, 
-                        top: `${30 + (i * 15)}%`,
-                        opacity: useTransform(smoothProgress, [0.1 + (i * 0.01), 0.12 + (i * 0.01)], [0, 1])
-                      }}
-                    >
-                      <motion.div 
-                        className="absolute inset-0 bg-cyan-400 rounded-full"
-                        animate={{ scale: [1, 3], opacity: [1, 0] }}
-                        transition={{ duration: 1.5, repeat: Infinity }}
-                      />
-                      <p className="absolute left-4 top-0 text-[8px] whitespace-nowrap text-cyan-400 font-mono">
-                        NODE_{100 + i}: DETECTED
-                      </p>
-                    </motion.div>
+                    <NodeBlip key={i} index={i} progress={smoothProgress} />
                   ))}
 
                   <div className="z-10 bg-slate-900/80 backdrop-blur-md p-6 rounded-lg border border-cyan-500/40 text-center shadow-2xl">
@@ -501,19 +558,8 @@ export default function ProtocolLifecycle() {
                    </motion.div>
                    
                    {/* Onion Rings */}
-                    {[layer1Scale, layer2Scale, layer3Scale].map((scale, i) => (
-                     <motion.div 
-                      key={i}
-                      style={{ 
-                        scale: useTransform(smoothProgress, [0.55 + i*0.02, 0.65 + i*0.02, 0.7 + i*0.05, 0.8 + i*0.05], [0, 1, 1, 3]),
-                        opacity: useTransform(smoothProgress, [0.55 + i*0.02, 0.6 + i*0.02, 0.7 + i*0.05, 0.8 + i*0.05], [0, 1, 1, 0]),
-                        rotate: useTransform(smoothProgress, [0.5, 1], [0, (i % 2 === 0 ? 360 : -360)]),
-                        width: 140 + i * 80, 
-                        height: 140 + i * 80,
-                        borderStyle: i === 1 ? 'dashed' : 'solid'
-                      }} 
-                      className="absolute rounded-full border-2 border-cyan-500/30 shadow-[0_0_30px_rgba(6,182,212,0.2)]"
-                     />
+                    {[...Array(3)].map((_, i) => (
+                     <OnionLayer key={i} index={i} progress={smoothProgress} />
                    ))}
                    
                    {/* Dummy Packets */}
@@ -608,36 +654,9 @@ export default function ProtocolLifecycle() {
 
         {/* --- ORBITING PEERS (Decorative) --- */}
         <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
-           {[...Array(8)].map((_, i) => {
-              const startX = (i % 2 === 0 ? -1 : 1) * 45;
-              const startY = (i < 4 ? -1 : 1) * 35;
-              const delay = i * 0.1;
-              
-              return (
-                <motion.div
-                  key={i}
-                  className="absolute w-28 h-28 border border-cyan-500/20 rounded-lg flex flex-col items-center justify-center bg-black/60 backdrop-blur-md shadow-[0_0_20px_rgba(6,182,212,0.1)]"
-                  style={{
-                    left: `${50 + startX}%`,
-                    top: `${50 + startY}%`,
-                    opacity: useTransform(smoothProgress, [0.1, 0.2, 0.85, 0.9], [0, 1, 1, 0]),
-                    scale: useTransform(smoothProgress, [0.1, 0.2], [0.5, 1]),
-                    x: useTransform(smoothProgress, [0.6, 0.7, 0.75, 0.85], [0, (i % 2 === 0 ? -800 : 800), (i % 2 === 0 ? -1200 : 1200), (i % 2 === 0 ? -2000 : 2000)]),
-                    y: useTransform(smoothProgress, [0.6, 0.85], [0, (i < 4 ? -500 : 500)]),
-                    willChange: "transform, opacity"
-                  }}
-                >
-                   <div className="w-8 h-8 mb-2 border border-cyan-500/30 rounded flex items-center justify-center">
-                      <div className="w-4 h-4 bg-cyan-500/20 rounded-sm animate-pulse" />
-                   </div>
-                   <div className="text-[7px] font-mono text-cyan-400/60 leading-tight text-center">
-                      PEER_{1024 + i}<br/>
-                      <span className="opacity-40">192.168.1.{10 + i}</span><br/>
-                      <span className="text-green-500/60">ACTIVE</span>
-                   </div>
-                </motion.div>
-              );
-           })}
+           {[...Array(8)].map((_, i) => (
+             <OrbitingPeer key={i} index={i} progress={smoothProgress} />
+           ))}
         </div>
 
         {/* Progress Bar (Bottom) */}

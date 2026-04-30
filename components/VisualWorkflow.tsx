@@ -8,6 +8,7 @@ export default function VisualWorkflow() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentPhase, setCurrentPhase] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
 
   const phases = [
     {
@@ -96,18 +97,28 @@ export default function VisualWorkflow() {
             <div className="relative w-full aspect-video rounded-2xl border border-slate-800 bg-slate-900 overflow-hidden shadow-2xl group">
               <video
                 ref={videoRef}
-                src="/workflow-video.mp4"
+                src="https://drive.google.com/uc?id=1BslyFLSNvbqq9WtVKQe6vSbZ5Dpnwy0x"
                 className="w-full h-full object-cover"
                 loop
                 muted
                 playsInline
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
+                onCanPlay={() => setIsLoading(false)}
+                onWaiting={() => setIsLoading(true)}
+                onLoadStart={() => setIsLoading(true)}
                 onError={(e) => {
-                  e.stopPropagation();
+                  setIsLoading(false);
                   console.error("Video element internal load exception:", e);
                 }}
               />
+
+              {/* Loading Spinner */}
+              {isLoading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm z-10">
+                  <div className="w-10 h-10 border-4 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin" />
+                </div>
+              )}
 
               {/* Overlay Video Controls */}
               <div className="absolute inset-x-0 bottom-0 bg-slate-950/80 backdrop-blur-sm p-4 border-t border-slate-800 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300">
