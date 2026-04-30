@@ -2,13 +2,14 @@
 
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { Play, Pause, Maximize, CheckCircle2 } from "lucide-react";
+import { Play, Pause, Maximize, CheckCircle2, ShieldAlert } from "lucide-react";
 
 export default function VisualWorkflow() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentPhase, setCurrentPhase] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
 
   const phases = [
     {
@@ -97,21 +98,41 @@ export default function VisualWorkflow() {
             <div className="relative w-full aspect-video rounded-2xl border border-slate-800 bg-slate-900 overflow-hidden shadow-2xl group">
               <video
                 ref={videoRef}
-                src="https://drive.google.com/uc?id=1BslyFLSNvbqq9WtVKQe6vSbZ5Dpnwy0x"
+                src="https://ypt5xzkkzjpbi5sz.public.blob.vercel-storage.com/workflow-video.mp4"
                 className="w-full h-full object-cover"
                 loop
                 muted
                 playsInline
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
-                onCanPlay={() => setIsLoading(false)}
+                onCanPlay={() => {
+                  setIsLoading(false);
+                  setHasError(false);
+                }}
                 onWaiting={() => setIsLoading(true)}
-                onLoadStart={() => setIsLoading(true)}
+                onLoadStart={() => {
+                  setIsLoading(true);
+                  setHasError(false);
+                }}
                 onError={(e) => {
                   setIsLoading(false);
+                  setHasError(true);
                   console.error("Video element internal load exception:", e);
                 }}
               />
+
+              {/* Error State */}
+              {hasError && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900 text-center p-6">
+                  <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mb-4">
+                    <ShieldAlert className="w-8 h-8 text-red-500" />
+                  </div>
+                  <h3 className="text-white font-bold mb-2">Video Stream Failed</h3>
+                  <p className="text-slate-400 text-xs max-w-xs mb-6">
+                    Failed to connect to the video server. This may be due to high traffic or connection issues.
+                  </p>
+                </div>
+              )}
 
               {/* Loading Spinner */}
               {isLoading && (
