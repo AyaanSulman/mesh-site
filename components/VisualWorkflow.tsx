@@ -100,6 +100,7 @@ export default function VisualWorkflow() {
                 ref={videoRef}
                 src="https://ypt5xzkkzjpbi5sz.public.blob.vercel-storage.com/workflow-video.mp4"
                 className="w-full h-full object-cover"
+                preload="metadata"
                 loop
                 muted
                 playsInline
@@ -120,6 +121,18 @@ export default function VisualWorkflow() {
                   console.error("Video element internal load exception:", e);
                 }}
               />
+
+              {/* Big Play Button (Bandwidth Saving) */}
+              {!isPlaying && !hasError && !isLoading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-slate-950/40 backdrop-blur-[2px] z-20 group-hover:bg-slate-950/20 transition-all">
+                  <button
+                    onClick={handlePlayPause}
+                    className="w-20 h-20 rounded-full bg-cyan-500 text-slate-950 flex items-center justify-center shadow-[0_0_50px_rgba(6,182,212,0.5)] hover:scale-110 transition-transform"
+                  >
+                    <Play className="w-10 h-10 fill-current" />
+                  </button>
+                </div>
+              )}
 
               {/* Error State */}
               {hasError && (
